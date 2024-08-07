@@ -1,5 +1,7 @@
+// controllers/authControllers.js
+
 const bcrypt = require('bcryptjs');
-const userModels = require("../models/userModels");
+const userModels = require('../models/userModels');
 
 // Register controller
 const registerController = async (req, res) => {
@@ -49,14 +51,6 @@ const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Validation
-        if (!email || !password) {
-            return res.status(400).send({
-                success: false,
-                message: "Please provide email and password",
-            });
-        }
-
         // Check if user exists
         const user = await userModels.findOne({ email }).select('+password');
         if (!user) {
@@ -75,10 +69,11 @@ const loginController = async (req, res) => {
             });
         }
 
-        // If everything is ok, return success message
+        // Send success response
         res.status(200).send({
             success: true,
-            message: 'User logged in successfully',
+            message: 'Login successful',
+            data: user,
         });
     } catch (error) {
         console.log(error);
