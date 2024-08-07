@@ -3,10 +3,10 @@ const userModels = require("../models/userModels");
 // Register controller
 const registerController = async (req, res) => {
     try {
-        const { username, email, password, phone, address } = req.body;
+        const { userName, email, password, phone, address, usertype } = req.body;
 
         // Validation
-        if (!username || !email || !password || !address || !phone) {
+        if (!userName || !email || !password || !address || !phone || !usertype) {
             return res.status(400).send({
                 success: false,
                 message: "Please fill all the fields",
@@ -23,7 +23,7 @@ const registerController = async (req, res) => {
         }
 
         // Create new user
-        const user = await userModels.create({ username, email, password, phone, address });
+        const user = await userModels.create({ userName, email, password, phone, address, usertype });
         res.status(201).send({
             success: true,
             message: 'User created successfully',
@@ -34,7 +34,7 @@ const registerController = async (req, res) => {
         res.status(500).send({
             success: false,
             message: 'Error in register API',
-            error,
+            error: error.message, // Send the error message
         });
     }
 };
