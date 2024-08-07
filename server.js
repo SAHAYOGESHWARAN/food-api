@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // route
-app.use('/api/v1/test', require('./routes/testRoutes')); // Corrected the route path
+app.use('/api/v1/test', require('./routes/testRoutes'));
+app.use('/api/v1/auth', require('./routes/authRoutes')); // Corrected the route path
 
 // Define a route to get all users (or display a welcome message)
 app.get("/", (req, res) => {
