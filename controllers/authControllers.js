@@ -15,7 +15,19 @@ try{
 
       //check user
       const exisiting = await userModel.findOne({email})
-      
+      if(exisiting){
+        return res.status(500).send({
+            success:false,
+            message:'Email Already Register please login'
+        })
+    }
+    //create new user
+    const user = await userModels.create({username,email,password,phone,address})
+    res.status(201).send({
+        success:true,
+        message:'User Created Successfully',
+
+    })
 }catch (error){
     console.log(error)
     res.status(500).send({
