@@ -39,4 +39,25 @@ const registerController = async (req, res) => {
     }
 };
 
+//LOGIN
+const loginController = async (req, res) => {
+  try{
+    const {email,password} = req.body
+    //validfatuion
+    if(!email || !password){
+        return res.status(400).send({
+            success:false,
+            message:"Please fill all the fields"
+            })
+            }
+        }
+  }catch (error){
+    console.log(error)
+    res.status(500).send({
+        success:false,
+       message:'Error In login Api',
+       error
+    })
+  }
+};
 module.exports = { registerController };
