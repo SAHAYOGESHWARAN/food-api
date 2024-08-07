@@ -1,31 +1,25 @@
 const express = require('express');
 const colors = require('colors');
-const cors = require("cors");
-const morgan = require("morgan");
+const cors = require('cors');
+const morgan = require('morgan');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+const connectDb = require('./config/db'); // Ensure you have this file for MongoDB connection
 
-// dotenv configuration
 dotenv.config();
-// Connect to database
-connectDB();
 
-// rest object
+// Connect to the database
+connectDb();
+
+// Initialize express
 const app = express();
 
-// middlewares
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// route
-app.use('/api/v1/test', require('./routes/testRoutes'));
-app.use('/api/v1/auth', require('./routes/authRoutes')); // Corrected the route path
-
-// Define a route to get all users (or display a welcome message)
-app.get("/", (req, res) => {
-    return res.status(200).send("<h1>Welcome To Food Server</h1>");
-});
+// Routes
+app.use('/api/v1/auth', require('./routes/authRoutes'));
 
 // Define the port
 const port = process.env.PORT || 3000;
