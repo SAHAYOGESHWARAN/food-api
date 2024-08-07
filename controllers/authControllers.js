@@ -14,7 +14,7 @@ try{
       }
 
       //check user
-      const exisiting = await userModel.findOne({email})
+      const exisiting = await userModels.findOne({email})
       if(exisiting){
         return res.status(500).send({
             success:false,
