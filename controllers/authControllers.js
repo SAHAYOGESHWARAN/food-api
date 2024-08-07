@@ -39,25 +39,50 @@ const registerController = async (req, res) => {
     }
 };
 
-//LOGIN
+// Login controller
 const loginController = async (req, res) => {
-  try{
-    const {email,password} = req.body
-    //validfatuion
-    if(!email || !password){
-        return res.status(400).send({
-            success:false,
-            message:"Please fill all the fields"
-            })
-            }
+    try {
+        const { email, password } = req.body;
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).send({
+                success: false,
+                message: "Please provide email and password",
+            });
         }
-  }catch (error){
-    console.log(error)
-    res.status(500).send({
-        success:false,
-       message:'Error In login Api',
-       error
-    })
-  }
+
+        // Check if user exists
+        const user = await userModels.findOne({ email });
+        if (!user) {
+            return res.status(401).send({
+                success: false,
+                message: 'Invalid credentials',
+            });
+        }
+
+        // Check if password matches
+        const isMatch = await user.matchPassword(password);
+        if (!isMatch) {
+            return res.status(401).send({
+                success: false,
+                message: 'Invalid credentials',
+            });
+        }
+
+        // If everything is ok, return success message
+        res.status(200).send({
+            success: true,
+            message: 'User logged in successfully',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in login API',
+            error: error.message,
+        });
+    }
 };
-module.exports = { registerController };
+
+module.exports = { registerController, loginController };
