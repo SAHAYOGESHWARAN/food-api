@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const userModels = require("../models/userModels");
 
 // Register controller
@@ -22,8 +23,12 @@ const registerController = async (req, res) => {
             });
         }
 
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         // Create new user
-        const user = await userModels.create({ userName, email, password, phone, address, usertype });
+        const user = await userModels.create({ userName, email, password: hashedPassword, phone, address, usertype });
         res.status(201).send({
             success: true,
             message: 'User created successfully',
@@ -62,7 +67,7 @@ const loginController = async (req, res) => {
         }
 
         // Check if password matches
-        const isMatch = await user.matchPassword(password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).send({
                 success: false,
