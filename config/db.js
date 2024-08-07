@@ -1,3 +1,4 @@
+// config/db.js
 const mongoose = require('mongoose');
 const colors = require('colors');
 
@@ -7,8 +8,6 @@ const connectDb = async () => {
         await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false
         });
         console.log(`Connected to Database: ${mongoose.connection.host}`.bgCyan);
     } catch (error) {
