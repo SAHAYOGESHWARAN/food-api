@@ -27,14 +27,14 @@ const registerController = async (req, res) => {
         res.status(201).send({
             success: true,
             message: 'User created successfully',
-            data: user, // You might want to send back the created user data
+            data: user,
         });
     } catch (error) {
         console.log(error);
         res.status(500).send({
             success: false,
             message: 'Error in register API',
-            error: error.message, // Send the error message
+            error: error.message,
         });
     }
 };
@@ -53,7 +53,7 @@ const loginController = async (req, res) => {
         }
 
         // Check if user exists
-        const user = await userModels.findOne({ email });
+        const user = await userModels.findOne({ email }).select('+password');
         if (!user) {
             return res.status(401).send({
                 success: false,
