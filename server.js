@@ -1,8 +1,21 @@
 const express = require('express');
-const colors = require('colors')
-// Initialize express app
+const colors = require('colors');
+const cors = require("cors");
+const morgan = require("morgan");
+const  dotenv = require('dotenv')
+
+//dot env  configuration
+dotenv.config()
+
+// rest object
 const app = express();
 
+
+//middlewares ()
+
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
 
 // Define a route to get all users (or display a welcome message)
 app.get("/", (req, res) => {
@@ -10,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 // Define the port
-const port = 3000;
+const port = process.env.PORT;
 
 // Start the server and listen on the defined port
 app.listen(port, () => {
