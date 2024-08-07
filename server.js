@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 // Define the port
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 // Start the server and listen on the defined port
 app.listen(port, () => {
