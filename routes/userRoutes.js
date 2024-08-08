@@ -5,6 +5,6 @@ const router = express.Router();
 
 //routes
 //GET USER || GET
-router.get('/gstUser',getUserController)
+router.get('/getUser',getUserController)
 
 module.exports = router;
