@@ -1,44 +1,33 @@
-// GET USER INFO
 const userModels = require('../models/userModels');
-const getUserController = async  (req,res) => {
+
+const getUserController = async (req, res) => {
     try {
-        // Use req.params.id
-        const userId = req.params.id;
-
-        if (!userId) {
-            return res.status(400).send({
-                success: false,
-                message: "User ID is required"
-            });
-        }
-
-        // Find user by ID
-        const user = await userModels.findById(userId);
-
+        console.log("Request Body:", req.body);  // Log the request body to debug
+        // Find user
+        const user = await userModels.findById(req.body.id);
         // Validation
         if (!user) {
             return res.status(404).send({
                 success: false,
-                message: "User not found"
+                message: "User Not Found",
             });
         }
-      // Handle password
-      user.password = undefined;
-
-      // Response
-      res.status(200).send({
-          success: true,
-          message: "User info",
-          data: user
-      });
-  } catch (error) {
-      console.log(error);
-      res.status(500).send({
-          success: false,
-          message: 'Error fetching user info',
-          error
-      });
-  }
+        // Hide password
+        user.password = undefined;
+        // Response
+        res.status(200).send({
+            success: true,
+            message: "User fetched Successfully",
+            user,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in Get User API",
+            error,
+        });
+    }
 };
 
 module.exports = { getUserController };
