@@ -19,7 +19,9 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
+app.use('/api/v1/auth', require('./routes/testRoutes'));
 app.use('/api/v1/auth', require('./routes/authRoutes'));
+app.use('/api/v1/auth', require('./routes/userRoutes'));
 
 // Define the port
 const port = process.env.PORT || 3000;
