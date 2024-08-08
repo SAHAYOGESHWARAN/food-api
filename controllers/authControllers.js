@@ -74,7 +74,7 @@ const loginController = async (req, res) => {
             });
         }
         //token
-        const token = JWT.sign({ userId: user._id }, process.env.SECRET_KEY,{
+        const token = JWT.sign({ Id: user._id }, process.env.SECRET_KEY,{
             expiresIn: '7d'
         });
         // Send success response
