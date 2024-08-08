@@ -6,7 +6,7 @@ const getUserController = async (req, res) => {
         console.log("Request Body:", req.body);
 
         // Attempt to find the user by ID
-        const user = await userModels.findById(req.body.id);
+        const user = await userModel.findById({ _id: req.body.id });
         
         // Check if the user was found
         if (!user) {
@@ -36,4 +36,21 @@ const getUserController = async (req, res) => {
     }
 };
 
-module.exports = { getUserController };
+// UPDATE USER
+const updateUserController = async (req, res) => {
+try{
+    //find user
+    const user = await userModel.findById({ _id: req.body.id });
+}catch (error)
+{
+    console.log(error);
+    res.status(500).send({
+        success: false,
+        message:'Error in update user API',
+        error:error.message
+    
+    })
+}
+};
+
+module.exports = { getUserController ,updateUserController};
