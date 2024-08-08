@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 const userModels = require('../models/userModels');
-
+const JWT = require('jsonwebtoken')
 
 
 // Register controller
