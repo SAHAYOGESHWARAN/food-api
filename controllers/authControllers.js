@@ -73,7 +73,8 @@ const loginController = async (req, res) => {
                 message: 'Invalid credentials as pass',
             });
         }
-
+        //token
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY,)
         // Send success response
         res.status(200).send({
             success: true,
