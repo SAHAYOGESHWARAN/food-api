@@ -29,5 +29,5 @@ const port = process.env.PORT || 3000;
 
 // Start the server and listen on the defined port
 app.listen(port, () => {
-    console.log(`Node Server is running on port ${port}`);  
+    console.log(`Node Server is running on port ${port}`);
 });
