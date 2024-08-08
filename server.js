@@ -25,9 +25,9 @@ app.use('/api/v1/auth', require('./routes/authRoutes'));
 app.use('/api/v1/user', require('./routes/userRoutes'));
 
 // Define the port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 7000;
 
 // Start the server and listen on the defined port
 app.listen(port, () => {
-    console.log(`Node Server is running on port ${port}`);
+    console.log(`Node Server is running on port ${port}`);  
 });
