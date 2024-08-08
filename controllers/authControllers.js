@@ -65,7 +65,7 @@ const loginController = async (req, res) => {
 
         // Check if password matches
         const isMatch = await bcrypt.compare(password, user.password);
-        console.log("NO MSTCH",password);
+        console.log("NO MATCH",password);
         console.log("USER PASS",user.password,"USER NAME",user)
         if (!isMatch) {
             return res.status(401).send({
@@ -74,12 +74,16 @@ const loginController = async (req, res) => {
             });
         }
         //token
-        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY,)
+        const token = JWT.sign({ userId: user._id }, process.env.SECRET_KEY,{
+            expiresIn: '7d'
+        });
         // Send success response
         res.status(200).send({
             success: true,
             message: 'Login successful',
             data: user,
+            token
+            
         });
     } catch (error) {
         console.log(error);
@@ -87,8 +91,10 @@ const loginController = async (req, res) => {
             success: false,
             message: 'Error in login API',
             error: error.message,
+            
         });
     }
 };
+
 
 module.exports = { registerController, loginController };
