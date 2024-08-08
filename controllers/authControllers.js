@@ -26,7 +26,7 @@ const registerController = async (req, res) => {
                 message: 'Email already registered, please login',
             });
         }
-
+       console.log("password ", password)
         // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -51,6 +51,7 @@ const registerController = async (req, res) => {
 // Login controller
 const loginController = async (req, res) => {
     try {
+        console.log("password ", req.body.password)
         const { email, password } = req.body;
 
         // Check if user exists
@@ -58,16 +59,18 @@ const loginController = async (req, res) => {
         if (!user) {
             return res.status(401).send({
                 success: false,
-                message: 'Invalid credentials',
+                message: 'Invalid credentials as user',
             });
         }
 
         // Check if password matches
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log("NO MSTCH",password);
+        console.log("USER PASS",user.password,"USER NAME",user)
         if (!isMatch) {
             return res.status(401).send({
                 success: false,
-                message: 'Invalid credentials',
+                message: 'Invalid credentials as pass',
             });
         }
 
